@@ -87,8 +87,27 @@ describe('Projects', function() {
     });
   });
 
-
-
+//3. POST Test
+  it('should add a SINGLE exercise on /exercise POST', function(done) {
+  chai.request(server)
+    .post('/api/v1/projects')
+    .send({'name': 'Casino Game', 'description': 'javaScript', 'tags' : ['vanillaJS']})
+    .end(function(err, res){
+      res.should.have.status(200);
+      res.should.be.json;
+      res.body.should.be.a('object');
+      res.body.should.have.property('SUCCESS');
+      res.body.SUCCESS.should.be.a('object');
+      res.body.SUCCESS.should.have.property('name');
+      res.body.SUCCESS.should.have.property('description');
+      res.body.SUCCESS.should.have.property('tags');
+      res.body.SUCCESS.should.have.property('_id');
+      res.body.SUCCESS.name.should.equal('Casino Game');
+      res.body.SUCCESS.description.should.equal('javaScript');
+      res.body.SUCCESS.tags[0].should.equal('vanillaJS');
+      done();
+    });
+  });
 
 
 });
