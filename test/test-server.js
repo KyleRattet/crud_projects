@@ -38,7 +38,7 @@ describe('Projects', function() {
   it('should list all projects on /projects GET request', function(done){
     chai.request(server)
     .get('/api/v1/projects')
-    .end(function(err, res){
+    .end(function(err, res) {
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a('array');
@@ -52,6 +52,38 @@ describe('Projects', function() {
       res.body[0].description.should.equal('Angular and logic exercise');
       res.body[0].tags[0].should.equal('angular');
       done();
+    });
+  });
+
+//2. GET ONE PROJECT
+  it('should list a SINGLE project on /project/<id> GET', function(done) {
+    var newProject = new Project({
+      name: "Angular Practice",
+      description: "Angular intro exercises",
+      tags: ['angular'],
+      group: true,
+      group_members: ['Pete']
+    });
+    newProject.save(function(err, data) {
+      chai.request(server)
+        .get('/api/v1/project/'+data.id)
+        .end(function(err, res){
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('_id');
+          res.body.should.have.property('name');
+          res.body.should.have.property('description');
+          res.body.should.have.property('tags');
+          res.body.should.have.property('tags');
+          res.body.should.have.property('group');
+          res.body.should.have.property('group_members');
+          res.body.name.should.equal('Angular Practice');
+          res.body.description.should.equal('Angular intro exercises');
+          res.body.tags[0].should.equal('angular');
+          res.body.group_members[0].should.equal('Pete');
+          done();
+        });
     });
   });
 

@@ -19,7 +19,15 @@ router.get('/projects', function(req, res, next) {
 });
 
 // ROUTE 2 GET ONE PROJECT
-
+router.get('/project/:id', function(req, res, next) {
+  Project.findById(req.params.id, function (err, data){
+    if(err){
+      res.json({'message': err});
+    } else {
+      res.json(data);
+    }
+  });
+});
 
 
 
