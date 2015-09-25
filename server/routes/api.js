@@ -7,4 +7,31 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//ROUTE 1 GET ALL PROJECTS
+router.get('/projects', function(req, res, next) {
+  Project.find(function(err, data){
+    if(err){
+      res.json({'message': err});
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+// ROUTE 2 GET ONE PROJECT
+
+
+
+
+// ROUTE 3 POST
+
+
+//ROUTE 4 PUT
+
+
+//ROUTE 5 DELETE
+
+
 module.exports = router;
+
+
