@@ -88,7 +88,7 @@ describe('Projects', function() {
   });
 
 //3. POST Test
-  it('should add a SINGLE exercise on /exercise POST', function(done) {
+  it('should add a SINGLE project on /project POST', function(done) {
   chai.request(server)
     .post('/api/v1/projects')
     .send({'name': 'Casino Game', 'description': 'javaScript', 'tags' : ['vanillaJS']})
@@ -109,5 +109,57 @@ describe('Projects', function() {
     });
   });
 
+//4. PUT Test
+  it("should update a single project on /project PUT", function(done){
+  chai.request(server)
+    .get('/api/v1/projects')
+    .end(function(err, res){
+      chai.request(server)
+        .put('/api/v1/project/'+res.body[0]._id)
+        .send({
+          'name': 'RP&S',
+          'description': "Angular Practice",
+          'tags': ['angular'],
+          'group': true,
+          'group_members': ['Pete']
+          })
+        .end(function(error, response){
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body.should.be.a('object');
+          response.body.should.have.property('UPDATED');
+          response.body.UPDATED.should.be.a('object');
+          response.body.UPDATED.should.have.property('name');
+          response.body.UPDATED.should.have.property('_id');
+          response.body.UPDATED.name.should.equal('RP&S');
+          response.body.UPDATED.description.should.equal('Angular Practice');
+          done();
+      });
+    });
+  });
+
+
+//5. DELETE TEST
+  it('should delete a SINGLE project on /project/<id> DELETE', function(done) {
+  chai.request(server)
+    .get('/api/v1/projects')
+    .end(function(err, res){
+      chai.request(server)
+        .delete('/api/v1/project/'+res.body[0]._id)
+        .end(function(error, response){
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body.should.be.a('object');
+          response.body.should.have.property('REMOVED');
+          response.body.REMOVED.should.be.a('object');
+          response.body.REMOVED.should.have.property('name');
+          response.body.REMOVED.should.have.property('_id');
+          response.body.REMOVED.name.should.equal('Paper, Rock, Scissors');
+          response.body.REMOVED.description.should.equal('Angular and logic exercise');
+          response.body.REMOVED.group_members[0].should.equal('Chip');
+          done();
+      });
+    });
+  });
 
 });

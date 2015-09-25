@@ -48,9 +48,36 @@ router.post('/projects', function(req, res, next) {
 });
 
 //ROUTE 4 PUT
+router.put('/project/:id', function (req, res, next){
+  var update = {
+    name: req.body.name,
+    description: req.body.description,
+    tags: req.body.tags,
+    group: req.body.group,
+    group_members: req.body.group_members
+  };
+  console.log(update);
+  var options = {new: true};
+  Project.findByIdAndUpdate(req.params.id, update, options, function(err, data){
+    if(err){
+      res.json({'message': err});
+    } else {
+      res.json({'UPDATED': data});
+    }
+  });
+});
 
 
 //ROUTE 5 DELETE
+router.delete('/project/:id', function (req, res, next){
+  Project.findByIdAndRemove(req.params.id, function (err, data) {
+    if(err) {
+      res.json({'message': err});
+    } else {
+      res.json({'REMOVED': data});
+    }
+  });
+});
 
 
 module.exports = router;

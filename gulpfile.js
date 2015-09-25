@@ -5,7 +5,7 @@ var connect = require('gulp-connect');
 // configure connect task
 gulp.task('connect', function() {
   connect.server({
-    root: 'server/app.js', // update path!!
+    root: 'server/views', // update path!!
     livereload: true
   });
 });
