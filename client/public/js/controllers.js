@@ -4,6 +4,16 @@ app.controller("ProjectController", function($scope, httpFactory, $timeout) {
   $scope.edit = false;
   $scope.message = "";
   $scope.messageSection = false;
+  $scope.project.group = false;
+  $scope.project.group_members = "";
+  // $scope.checked = false;
+
+
+  //show group members
+  // function groupInput () {
+  //   console.log("test input")
+  //   $scope.checked = true;
+  // }
 
    //update message section
   function renderMessage (str) {
@@ -35,6 +45,7 @@ app.controller("ProjectController", function($scope, httpFactory, $timeout) {
       $scope.projects.push(response.data);
       renderMessage("Project added successfully!");
       getProjects('api/v1/projects');
+      $scope.project = {};
     });
   };
 
@@ -65,6 +76,7 @@ app.controller("ProjectController", function($scope, httpFactory, $timeout) {
       $scope.edit = false;
       renderMessage("Project edited successfully!");
       getProjects('api/v1/projects');
+      $scope.project = {};
     });
   };
 

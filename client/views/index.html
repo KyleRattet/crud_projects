@@ -15,30 +15,47 @@
     <h1 class="text-center" ng-hide="edit">Add a Project</h1>
     <h1 class="text-center" ng-show="edit">Edit a Project</h1>
 
-    <form>
+    <form class="form-horizontal">
       <div class="form-group">
-        <label>Project Name</label>
+        <label class="col-xs-3 control-label">Project Name</label>
+        <div class="col-xs-6">
         <input type="text" class="form-control" ng-model="project.name" placeholder="Enter the Project Name" required>
+        </div>
       </div>
       <div class="form-group">
-        <label>Project Description</label>
+        <label class="col-xs-3 control-label">Project Description</label>
+        <div class="col-xs-6">
         <input type="text" class="form-control" ng-model="project.description" placeholder="Enter the project description" required>
+        </div>
       </div>
       <div class="form-group">
-        <label>Project Technologies</label>
+        <label class="col-xs-3 control-label">Project Technologies</label>
+        <div class="col-xs-6">
         <input type="text" class="form-control" ng-model="project.tags" placeholder="Enter the project technologies" required>
+        </div>
       </div>
-      <div class="form-group">
-        <label>Group Project</label>
-        <input type="text" class="form-control" ng-model="project.group" placeholder="Group Project?" required>
+      <div class="checkbox">
+        <label class="col-xs-3 control-label"></label>
+        <div class="col-xs-6">
+          <label>
+            <input ng-model="project.group" type="checkbox"> Group Project
+          </label>
+        </div>
       </div>
-      <div class="form-group">
-        <label>Group Members</label>
-        <input type="text" class="form-control" ng-model="project.group_members" placeholder="Group Members?" required>
+
+      <div ng-show="project.group" class="form-group">
+        <label class="col-xs-3 control-label"></label>
+        <div class="col-xs-6">
+          <input type="text" class="form-control" ng-model="project.group_members" placeholder="Group Members?" required>
+        </div>
       </div>
+      <br>
+      <div class="col-xs-4 col-xs-offset-4">
       <button type="submit" ng-click="postProject()" class="btn btn-primary btn-block" ng-hide="edit">Submit Project</button>
        <button type="submit" ng-click="updateProject()" class="btn btn-primary btn-block" ng-show="edit">Update Project</button>
+      </div>
     </form>
+    <br>
 
   </div>
 
