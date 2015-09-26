@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>CRUD Projects</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/bootstrap.min.css" rel="stylesheet" integrity="sha256-JcgoO7qVianjbv43Z5KinReHzk9/rEZg5m6z/ZZy3DI= sha512-rYMbEYJa5+7VkGdfAypdYHqwIdCNEBKh8lhKUNIv58tgHQuHHzXC/Bzf66BFDkTjq970Lc6OIEpgllKINGDCKQ==" crossorigin="anonymous">
+
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body ng-controller="ProjectController">
@@ -15,7 +16,7 @@
     <h1 class="text-center" ng-hide="edit">Add a Project</h1>
     <h1 class="text-center" ng-show="edit">Edit a Project</h1>
 
-    <form class="form-horizontal">
+    <form class="form-horizontal" name="form">
       <div class="form-group">
         <label class="col-xs-3 control-label">Project Name</label>
         <div class="col-xs-6">
@@ -42,16 +43,15 @@
           </label>
         </div>
       </div>
-
       <div ng-show="project.group" class="form-group">
         <label class="col-xs-3 control-label"></label>
         <div class="col-xs-6">
-          <input type="text" class="form-control" ng-model="project.group_members" placeholder="Group Members?" required>
+          <input type="text" class="form-control" ng-model="project.group_members" placeholder="Group Members?">
         </div>
       </div>
       <br>
       <div class="col-xs-4 col-xs-offset-4">
-      <button type="submit" ng-click="postProject()" class="btn btn-primary btn-block" ng-hide="edit">Submit Project</button>
+      <button ng-disabled="form.$invalid" type="submit" ng-click="postProject()" class="btn btn-primary btn-block" ng-hide="edit">Submit Project</button>
        <button type="submit" ng-click="updateProject()" class="btn btn-primary btn-block" ng-show="edit">Update Project</button>
       </div>
     </form>
@@ -63,6 +63,11 @@
 
   <div ng-show="messageSection">
     <p class="alert alert-info text-center" role="alert">{{message}}</p>
+  </div>
+
+  <div class="search">
+
+  <span><strong>Search Projects: </strong><input type="text" ng-model="searchText"></span>
   </div>
 
   <div class="project-section">
@@ -80,7 +85,7 @@
       </thead>
       <tbody>
 
-        <tr ng-repeat="project in projects">
+        <tr ng-repeat="project in projects | filter: searchText">
           <td>{{ project.name }}</td>
           <td>{{ project.description }}</td>
           <td ng-repeat="tag in project.tags">{{ tag }}</td>
