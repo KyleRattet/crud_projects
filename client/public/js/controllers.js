@@ -1,7 +1,20 @@
-app.controller("ProjectController", function($scope, httpFactory) {
+app.controller("ProjectController", function($scope, httpFactory, $timeout) {
 
   $scope.project = {};
   $scope.edit = false;
+  $scope.message = "";
+  $scope.messageSection = false;
+
+   //update message section
+  function renderMessage (str) {
+    $scope.messageSection = true;
+    $scope.message = str;
+    $timeout(function() {
+      $scope.messageSection = false;
+    }, 5000);
+  };
+
+
 
   //1. Get Projects Function, using route
   getProjects = function (url) {
@@ -16,13 +29,12 @@ app.controller("ProjectController", function($scope, httpFactory) {
 
   //2. Post Projects
   $scope.postProject = function (){
-
     var payload = $scope.project;
-
     httpFactory.post('api/v1/projects', payload)
     .then(function(response){
       $scope.projects.push(response.data);
-      // getProjects('api/v1/projects');
+      renderMessage("Project added successfully!");
+      getProjects('api/v1/projects');
     });
   };
 
@@ -31,7 +43,7 @@ app.controller("ProjectController", function($scope, httpFactory) {
     projectURL = "api/v1/project/"+ id;
     httpFactory.delete(projectURL)
     .then(function(response) {
-
+      renderMessage("Project deleted successfully!");
       getProjects('api/v1/projects');
     });
   };
@@ -50,10 +62,12 @@ app.controller("ProjectController", function($scope, httpFactory) {
     var update = $scope.project;
     httpFactory.put(projectURL, update)
     .then(function(response){
-
       $scope.edit = false;
+      renderMessage("Project edited successfully!");
       getProjects('api/v1/projects');
     });
   };
+
+
 
 });
