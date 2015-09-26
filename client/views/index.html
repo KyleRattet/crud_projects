@@ -8,9 +8,80 @@
   </head>
   <body ng-controller="ProjectController">
 
-    <p>Display Projects</p>
+  <div class="container">
 
-    <button type="submit" ng-click="postProject()" class="btn btn-primary btn-block">Submit</button>
+  <div class="add-project">
+
+    <h1 class="text-center" ng-hide="edit">Add a Project</h1>
+    <h1 class="text-center" ng-show="edit">Edit a Project</h1>
+
+    <form>
+      <div class="form-group">
+        <label>Project Name</label>
+        <input type="text" class="form-control" ng-model="project.name" placeholder="Enter the Project Name" required>
+      </div>
+      <div class="form-group">
+        <label>Project Description</label>
+        <input type="text" class="form-control" ng-model="project.description" placeholder="Enter the project description" required>
+      </div>
+      <div class="form-group">
+        <label>Project Technologies</label>
+        <input type="text" class="form-control" ng-model="project.tags" placeholder="Enter the project technologies" required>
+      </div>
+      <div class="form-group">
+        <label>Group Project</label>
+        <input type="text" class="form-control" ng-model="project.group" placeholder="Group Project?" required>
+      </div>
+      <div class="form-group">
+        <label>Group Members</label>
+        <input type="text" class="form-control" ng-model="project.group_members" placeholder="Group Members?" required>
+      </div>
+      <button type="submit" ng-click="postProject()" class="btn btn-primary btn-block" ng-hide="edit">Submit Project</button>
+       <button type="submit" ng-click="updateProject()" class="btn btn-primary btn-block" ng-show="edit">Update Project</button>
+    </form>
+
+  </div>
+
+  <br><hr>
+
+  <div class="message-section" ng-show="success">
+    <p class="alert alert-info" role="alert">{{message}}</p>
+  </div>
+
+  <div class="project-section">
+    <h2 class="text-center"></h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Tags</th>
+          <th>Group</th>
+          <th>Group Members</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr ng-repeat="project in projects">
+          <td>{{ project.name }}</td>
+          <td>{{ project.description }}</td>
+          <td ng-repeat="tag in project.tags">{{ tag }}</td>
+          <td>{{ project.group }}</td>
+          <td ng-repeat="member in project.group_members">{{ member }}</td>
+          <td class="text-right">
+          <button ng-click="editProject(project._id)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
+          <button ng-click="deleteProject(project._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+          </td>
+        </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+
+
+  </div>
 
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 
