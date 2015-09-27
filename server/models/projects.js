@@ -13,3 +13,4 @@ var Project = new Schema ({
 module.exports = mongoose.model('projects', Project);
 
 
+mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/projects");
