@@ -97,14 +97,14 @@ describe('Projects', function() {
       res.should.be.json;
       res.body.should.be.a('object');
       res.body.should.have.property('SUCCESS');
-      res.body.SUCCESS.should.be.a('object');
-      res.body.SUCCESS.should.have.property('name');
-      res.body.SUCCESS.should.have.property('description');
-      res.body.SUCCESS.should.have.property('tags');
-      res.body.SUCCESS.should.have.property('_id');
-      res.body.SUCCESS.name.should.equal('Casino Game');
-      res.body.SUCCESS.description.should.equal('javaScript');
-      res.body.SUCCESS.tags[0].should.equal('vanillaJS');
+      res.body.SUCCESS[0].should.be.a('object');
+      res.body.SUCCESS[0].should.have.property('name');
+      res.body.SUCCESS[0].should.have.property('description');
+      res.body.SUCCESS[0].should.have.property('tags');
+      res.body.SUCCESS[0].should.have.property('_id');
+      res.body.SUCCESS[0].name.should.equal('Casino Game');
+      res.body.SUCCESS[0].description.should.equal('javaScript');
+      res.body.SUCCESS[0].tags[0].should.equal('vanillaJS');
       done();
     });
   });
@@ -147,6 +147,7 @@ describe('Projects', function() {
       chai.request(server)
         .delete('/api/v1/project/'+res.body[0]._id)
         .end(function(error, response){
+          console.log(response.body)
           response.should.have.status(200);
           response.should.be.json;
           response.body.should.be.a('object');
