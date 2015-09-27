@@ -68,6 +68,16 @@
   <div class="search">
 
   <span><strong>Search Projects: </strong><input type="text" ng-model="searchText"></span>
+
+  <span><strong>Sort Projects: </strong><select class="form-inline" ng-model="sort">
+    <option value='name'>Name</option>
+    <option value='description'>Description</option>
+    <option value='tags'>Tags</option>
+    <option value='group'>Group</option>
+    <option value='group_members'>Group Members</option>
+  </select>
+
+
   </div>
 
   <div class="project-section">
@@ -84,15 +94,15 @@
         </tr>
       </thead>
       <tbody>
-
-        <tr ng-repeat="project in projects | filter: searchText">
+        <tr ng-repeat="project in projects | filter: searchText | orderBy: sort ">
           <td>{{ project.name }}</td>
           <td>{{ project.description }}</td>
           <td ng-repeat="tag in project.tags">{{ tag }}</td>
           <td>{{ project.group }}</td>
           <td ng-repeat="member in project.group_members">{{ member }}</td>
           <td class="text-right">
-          <button ng-click="editProject(project._id)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
+          <button ng-hide="name" ng-click="editProject(project._id)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
+          <button ng-show="name" ng-click="updateProject()" class="btn btn-danger"><span class="glyphicon glyphicon-update"></span></button>
           <button ng-click="deleteProject(project._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
           </td>
         </tr>

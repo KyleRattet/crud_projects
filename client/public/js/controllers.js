@@ -6,6 +6,7 @@ app.controller("ProjectController", function($scope, httpFactory, $timeout) {
   $scope.messageSection = false;
   $scope.project.group = false;
   $scope.project.group_members = "";
+  $scope.sort = 'name';
   // $scope.checked = false;
 
 
