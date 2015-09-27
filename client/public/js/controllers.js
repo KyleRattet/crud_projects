@@ -7,14 +7,6 @@ app.controller("ProjectController", function($scope, httpFactory, $timeout) {
   $scope.project.group = false;
   $scope.project.group_members = "";
   $scope.sort = 'name';
-  // $scope.checked = false;
-
-
-  //show group members
-  // function groupInput () {
-  //   console.log("test input")
-  //   $scope.checked = true;
-  // }
 
    //update message section
   function renderMessage (str) {
@@ -23,7 +15,7 @@ app.controller("ProjectController", function($scope, httpFactory, $timeout) {
     $timeout(function() {
       $scope.messageSection = false;
     }, 5000);
-  };
+  }
 
 
 
